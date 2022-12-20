@@ -3,5 +3,5 @@ from . import views
 from django.views.decorators.csrf import csrf_exempt
 
 urlpatterns = [
-    path("", views.upload_file, name='upload_file'),
+    path("",  csrf_exempt(views.upload_file), name='upload_file'),
 ]

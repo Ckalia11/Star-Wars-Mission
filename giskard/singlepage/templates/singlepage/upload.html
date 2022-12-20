@@ -13,21 +13,20 @@
         {% comment %} <link rel="stylesheet" type="text/css" href="{% static 'videos_interface/css/base.css' %}"> {% endcomment %}
     </head>
     <body>
-        {% if request.method == "GET" %}
+        <div class = "container-fluid" style = "max-width: 50%">
             <form enctype="multipart/form-data" id = "upload-form" action = "/" method = "post"> {% csrf_token %}
                 <h2 class = 'mb-2 text-center mt-5'>Upload File</h2>
-                <div class = "container-fluid" style = "max-width: 50%">
                     <div class="mb-3">
                         <label for="{{form.file.id}}" class="form-label">File <span style = 'color: grey;'>(.json)</span></label>
                         {{form.file}}
                     </div>
                     <div class = "invalid-feedback invalid-upload" style = "display:none"></div>
                     <input type="submit" class = "btn btn-primary" value="Upload"/>
-                </div>
             </form>
-            <script src = "{% static 'singlepage/js/upload-file.js' %}"> </script>
-        {% else %}
-            <h2 class = 'mb-2 text-center mt-5'>The Probability of Success is {{probability_success}}</h2>
-        {% endif %}
+            <br>
+            <div class = "display-probability" style = "display:none"></div>
+        </div>
+
+        <script src = "{% static 'singlepage/js/upload-file.js' %}"> </script>
     </body>
 </html>
