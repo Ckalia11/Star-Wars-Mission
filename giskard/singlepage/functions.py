@@ -4,7 +4,11 @@ import json
 import os
 from collections import defaultdict
 
-def create_connection(db_file):
+app_dir = "singlepage"
+example_folder = "example2"
+files_dir_path = os.path.join(app_dir, "json_files", "examples", example_folder)
+
+def _create_connection(db_file):
     """ create a database connection to the SQLite database
         specified by the db_file
     :param db_file: database file
@@ -18,7 +22,7 @@ def create_connection(db_file):
 
     return conn
 
-def select_all_routes(conn):
+def _select_all_routes(conn):
     """
     Query all rows in the tasks table
     :param conn: the Connection object
@@ -31,7 +35,7 @@ def select_all_routes(conn):
 
     return rows
 
-def create_routes_dict(routes):
+def _create_routes_dict(routes):
     routes_dict = defaultdict(list)
     for route in routes:
         start = route[0]
@@ -91,15 +95,11 @@ def compute_probability_success(bounty_encounters):
     probability = 1/10 + (9**k / 10**(k + 1))
     return 1 - probability
 
-example_folder = "example2"
-app_dir = "singlepage"
 
-def get_millennium_data():
-    
-    autonomy_file_path = os.path.join(app_dir, "json_files", "examples", example_folder, "millennium-falcon.json")
-    
+def get_millennium_data(millennium_file):
+        
     # read millennium-falcon.json file
-    with open(autonomy_file_path) as r:
+    with open(millennium_file) as r:
         millennium_dict = json.load(r)
 
     autonomy = millennium_dict.get("autonomy")
@@ -124,13 +124,22 @@ def get_empire_data(empire_file):
     return (countdown, hunting)
 
 def get_routes(routes_db):
-    db_path = os.path.join(app_dir, "json_files", "examples", example_folder, routes_db)
-    curr = create_connection(db_path)
-    routes = select_all_routes(curr)
+    # change to manually test
+    db_path = os.path.join(files_dir_path, routes_db)
+    curr = _create_connection(db_path)
+    routes = _select_all_routes(curr)
 
-    routes_dict = create_routes_dict(routes)
+    routes_dict = _create_routes_dict(routes)
 
     return routes_dict
+
+def get_probability_success(millennium_file, empire_file):
+    countdown, hunting = get_empire_data(empire_file)
+    autonomy, departure, arrival, routes_db = get_millennium_data(millennium_file)
+    routes = get_routes(routes_db)
+    bounty_encounters = traverse_graph(routes, departure, arrival, countdown, hunting, autonomy)
+    probability_success = compute_probability_success(bounty_encounters)
+    return probability_success
 
 
 

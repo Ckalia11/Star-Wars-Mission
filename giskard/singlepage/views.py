@@ -1,9 +1,17 @@
 from django.http import HttpResponseRedirect, HttpResponse, JsonResponse
 from django.shortcuts import render
 from .forms import UploadJsonFileForm
-from .functions import traverse_graph, compute_probability_success, get_millennium_data, get_empire_data, get_routes
+from .functions import get_probability_success
 import json
-import click
+import os
+
+# specify path to millennium-falcon.json file
+app_dir = "singlepage"
+example_folder = "example2"
+
+files_dir_path = os.path.join(app_dir, "json_files", "examples", example_folder)
+millennium_file = os.path.join(files_dir_path, "millennium-falcon.json")
+
 
 def upload_file(request):
     context = {}
@@ -11,12 +19,7 @@ def upload_file(request):
         form = UploadJsonFileForm(request.POST, request.FILES)
         if form.is_valid():
             empire_file = form.cleaned_data.get("file")
-        countdown, hunting = get_empire_data(empire_file)
-        autonomy, departure, arrival, routes_db = get_millennium_data()
-        routes = get_routes(routes_db)
-        bounty_encounters = traverse_graph(routes, departure, arrival, countdown, hunting, autonomy)
-        probability_success = compute_probability_success(bounty_encounters)
-        print(probability_success)
+        probability_success = get_probability_success(millennium_file, empire_file)
         formatted_probability = f"{int(100 * probability_success)} %"
         return JsonResponse(
             {
