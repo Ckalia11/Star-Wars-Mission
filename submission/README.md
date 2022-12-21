@@ -12,7 +12,8 @@ The single-page application is built using Django and JavaScript APIs.
 ## Command-Line Interface
 
 - Install Python
-- At the level where manage.py is located, run the command `python give-me-the-odds.py <path to millennium-falcon.json> <path to empire.json>`
+- At the level where manage.py is located, run the command 
+`python give-me-the-odds.py <path to millennium-falcon.json> <path to empire.json>`
 
 
 
