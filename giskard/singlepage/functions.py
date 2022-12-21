@@ -3,12 +3,13 @@ from collections import defaultdict, deque
 import json
 import os
 from collections import defaultdict
+import sys
 
 app_dir = "singlepage"
 example_folder = "example2"
 files_dir_path = os.path.join(app_dir, "json_files", "examples", example_folder)
 
-def _create_connection(db_file):
+def create_connection(db_file):
     """ create a database connection to the SQLite database
         specified by the db_file
     :param db_file: database file
@@ -22,7 +23,7 @@ def _create_connection(db_file):
 
     return conn
 
-def _select_all_routes(conn):
+def select_all_routes(conn):
     """
     Query all rows in the tasks table
     :param conn: the Connection object
@@ -35,7 +36,7 @@ def _select_all_routes(conn):
 
     return rows
 
-def _create_routes_dict(routes):
+def create_routes_dict(routes):
     routes_dict = defaultdict(list)
     for route in routes:
         start = route[0]
@@ -97,21 +98,31 @@ def compute_probability_success(bounty_encounters):
 
 
 def get_millennium_data(millennium_file):
-        
-    # read millennium-falcon.json file
-    with open(millennium_file) as r:
-        millennium_dict = json.load(r)
-
-    autonomy = millennium_dict.get("autonomy")
-    departure = millennium_dict.get("departure")
-    arrival = millennium_dict.get("arrival")
-    routes_db = millennium_dict.get("routes_db")
+    if os.path.isfile(millennium_file):
+        try:
+            with open(millennium_file) as r:
+                try:
+                    millennium_dict = json.load(r)
+                except ValueError:
+                    print('Decoding JSON has failed')
+                    sys.exit()
+        except IOError as e:
+            print(f"Couldn't open or write to file ({e})")
+    else:
+        raise Exception("Path to millennium-falcon.json does not exist")
+    try:
+        autonomy = millennium_dict["autonomy"]
+        departure = millennium_dict["departure"]
+        arrival = millennium_dict["arrival"]
+        routes_db = millennium_dict["routes_db"]
+    except KeyError:
+        print("Some or all data not found in millennium-falcon.json")
+        sys.exit()
 
     return (autonomy, departure, arrival, routes_db)
 
 def get_empire_data(empire_file):
     empire_dict = json.load(empire_file)
-
     countdown = empire_dict.get("countdown")
     bounty_hunters = empire_dict.get("bounty_hunters")
 
@@ -126,10 +137,10 @@ def get_empire_data(empire_file):
 def get_routes(routes_db):
     # change to manually test
     db_path = os.path.join(files_dir_path, routes_db)
-    curr = _create_connection(db_path)
-    routes = _select_all_routes(curr)
+    curr = create_connection(db_path)
+    routes = select_all_routes(curr)
 
-    routes_dict = _create_routes_dict(routes)
+    routes_dict = create_routes_dict(routes)
 
     return routes_dict
 
