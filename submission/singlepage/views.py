@@ -7,7 +7,7 @@ import os
 
 # specify path to millennium-falcon.json file
 app_dir = "singlepage"
-example_folder = "example2"
+example_folder = "example1"
 
 files_dir_path = os.path.join(app_dir, "json_files", "examples", example_folder)
 millennium_file = os.path.join(files_dir_path, "millennium-falcon.json")

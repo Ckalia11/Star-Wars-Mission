@@ -6,7 +6,7 @@ from collections import defaultdict
 import sys
 
 app_dir = "singlepage"
-example_folder = "example2"
+example_folder = "example1"
 files_dir_path = os.path.join(app_dir, "json_files", "examples", example_folder)
 
 def create_connection(db_file):
@@ -83,11 +83,13 @@ def traverse_graph(routes, departure, arrival, countdown, hunting, autonomy):
         return min_total
 
     res = solve(departure, autonomy, 0, 0)
-    return 0 if res == float("inf") else res
+    return -1 if res == float("inf") else res
 
 
 # returns probability of being captured
 def compute_probability_success(bounty_encounters):
+    if bounty_encounters == -1:
+        return 0
     if bounty_encounters == 0:
         return 1
     if bounty_encounters == 1:
