@@ -1,7 +1,24 @@
 # Star Wars Mission
 
 ## About
-In this project, I created a single-page application using Django and JavaScript and a command-line interface that computes and displays the odds that the Millennium Falcon saves the galaxy. This project is part of a challenge I completed.
+In this project, I created a single-page application using Django and JavaScript and a command-line interface that computes and displays the odds that the Millennium Falcon saves the galaxy. This project is part of a challenge I completed. Details about the mission can be found later in this section.
+
+## How to Run
+
+### Single-Page Web Application
+
+The single-page application is built using Django and JavaScript APIs.
+
+- Clone this repository
+- Install Python and Django
+- At the level where manage.py is located, run the command `python manage.py runserver`
+- Visit the localhost of your computer, usually at `127.0.0.1:8000`
+
+### Command-Line Interface
+
+- Install Python
+- At the level where manage.py is located, run the command 
+`python give-me-the-odds.py <path to millennium-falcon.json> <path to empire.json>`
 
 ## Details about the Mission
 
