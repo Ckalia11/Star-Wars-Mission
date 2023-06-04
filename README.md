@@ -1,6 +1,11 @@
-# Developer Technical Test
+# Star Wars Mission
 
-## What are the odds?
+## About
+In this project, I created a single-page application using Django and JavaScript and a command-line interface that computes and displays the odds that the Millennium Falcon saves the galaxy. This project is part of a challenge I completed.
+
+## Details about the Mission
+
+### What are the odds?
 
 The Death Star - the Empire's ultimate weapon - is almost operational and is currently approaching the Endor planet. The countdown has started.
 
