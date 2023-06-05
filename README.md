@@ -10,9 +10,10 @@ In this project, I created a single-page application using Django and JavaScript
 The single-page application is built using Django and JavaScript APIs.
 
 - Clone this repository
-- Install Python and Django
-- At the level where manage.py is located, run the command `python manage.py runserver`
-- Visit the localhost of your computer, usually at `127.0.0.1:8000`
+- Install Python
+- At the level where `manage.py` is located, run the command `pip install -r requirements.txt` to install any dependencies
+- At the same level, run the command `python manage.py runserver` to start the application
+- Visit the localhost of your computer at `127.0.0.1`
 
 ### Command-Line Interface
 
